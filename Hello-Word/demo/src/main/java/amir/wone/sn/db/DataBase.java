@@ -1,6 +1,7 @@
 package amir.wone.sn.db;
 
 import amir.wone.sn.models.Etudiant;
+import amir.wone.sn.models.EtudiantSportif;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,8 +21,7 @@ public class DataBase {
         Properties props = new Properties();
         props.setProperty("user", user);
         props.setProperty("password", password);
-        Connection connection = DriverManager.getConnection(url, props);
-        return connection;
+        return DriverManager.getConnection(url, props);
     }
 
     public static ArrayList<Etudiant> getStudents() throws SQLException{
@@ -39,4 +39,21 @@ public class DataBase {
         preparedStatement.close();
         return studentList;
     }
+
+    public static ArrayList<Etudiant> getAtleticStudents() throws SQLException{
+        ArrayList<Etudiant> studentSportif = new ArrayList<>();
+        String query = "SELECT * FROM student INNER JOIN student_sportif ON student.id = student_sportif.student_id";
+        Connection con = getConnection();
+        PreparedStatement preparedStatement = con.prepareStatement(query);
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()) {
+            EtudiantSportif etudiantSportif = new EtudiantSportif(rs.getInt("id"), rs.getString("name"), rs.getString("first_name"),
+                    rs.getString("email"), rs.getString("address"), rs.getString("date_of_birth"), rs.getString("sport_name"));
+            studentSportif.add(etudiantSportif);
+        }
+        rs.close();
+        preparedStatement.close();
+        return studentSportif;
+    }
+
 }

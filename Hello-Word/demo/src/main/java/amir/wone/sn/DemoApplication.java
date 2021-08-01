@@ -35,14 +35,7 @@ public class DemoApplication {
 
 	@GetMapping("/student")
 	public ArrayList<Etudiant> student(@RequestParam(value = "sportif", defaultValue= "false") String sportif) throws SQLException {
-		ArrayList<Etudiant> response;
-		if (sportif.equals("true")){
-			response = DataBase.getAtleticStudents();
-		}else{
-			response = DataBase.getStudents();
-		}
-		return response;
+		return sportif.equals("true") ? DataBase.getAtleticStudents() : DataBase.getStudents();
 	}
-
 }
 

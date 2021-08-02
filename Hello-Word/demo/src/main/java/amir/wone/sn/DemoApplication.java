@@ -23,6 +23,11 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
+	@GetMapping
+	public String index(){
+		return "<h1>WELCOME</h1>";
+	}
+
 	@GetMapping("/hello")
 	public String hello(@RequestParam(value = "name", defaultValue = "wordl") String name){
 	    return String.format("<h1>Hello %s ! </h1>", name);
@@ -33,9 +38,6 @@ public class DemoApplication {
 		return new Greeting(counter.incrementAndGet(), String.format(template, name));
 	}
 
-	@GetMapping("/student")
-	public ArrayList<Etudiant> student(@RequestParam(value = "sportif", defaultValue= "false") String sportif) throws SQLException {
-		return sportif.equals("true") ? DataBase.getAtleticStudents() : DataBase.getStudents();
-	}
+
 }
 

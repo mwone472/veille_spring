@@ -2,11 +2,13 @@ package amir.wone.sn.db;
 
 import amir.wone.sn.models.Etudiant;
 import amir.wone.sn.models.EtudiantSportif;
+import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
 
+@Service
 public class DataBase {
     protected static String url = "jdbc:postgresql://localhost:5432/gstudent";
     protected static String user = "odoo";
@@ -24,7 +26,7 @@ public class DataBase {
         return DriverManager.getConnection(url, props);
     }
 
-    public static ArrayList<Etudiant> getStudents() throws SQLException{
+    public ArrayList<Etudiant> getStudents() throws SQLException{
         ArrayList<Etudiant> studentList = new ArrayList<Etudiant>();
         String query = "SELECT * FROM student";
         Connection con = getConnection();
@@ -40,7 +42,7 @@ public class DataBase {
         return studentList;
     }
 
-    public static ArrayList<Etudiant> getAtleticStudents() throws SQLException{
+    public  ArrayList<Etudiant> getAtleticStudents() throws SQLException{
         ArrayList<Etudiant> studentSportif = new ArrayList<>();
         String query = "SELECT * FROM student INNER JOIN student_sportif ON student.id = student_sportif.student_id";
         Connection con = getConnection();

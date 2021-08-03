@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public class Book {
     @ManyToMany
     @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
         inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<Author> authors;
+    private Set<Author> authors = new HashSet<>();
 
     public Book() {
     }
@@ -24,6 +25,10 @@ public class Book {
     public Book(String title, Set<Author> authors) {
         this.title = title;
         this.authors = authors;
+    }
+
+    public Book(String title) {
+        this.title = title;
     }
 
     public Book(Long id, String title, Set<Author> authors) {
@@ -61,7 +66,6 @@ public class Book {
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", authors=" + authors +
                 '}';
     }
 
